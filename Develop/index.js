@@ -11,18 +11,8 @@ const questions = [
   },
   {
     type: "input",
-    name: "about",
-    message: "What is your project about?",
-  },
-  {
-    type: "input",
-    name: "motivation",
-    message: "What was your motivation for this project?",
-  },
-  {
-    type: "input",
-    name: "language",
-    message: "What language did you use?",
+    name: "description",
+    message: "How would you describe this project?",
   },
   {
     type: "input",
@@ -41,56 +31,80 @@ const questions = [
   },
   {
     type: "input",
+    name: "test",
+    message: "What are the test instructions?",
+  },
+  {
+    type: "input",
     name: "license",
     message: "Did you use any licenses?",
   },
   {
     type: "input",
-    name: "github",
-    message: "What is the github link to the repository?",
+    name: "githubUsername",
+    message: "What is your github username?",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is your email address?",
   },
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(answers) {
-    const readMeContent = generateMarkdown(answers);
-    fs.writeFile('./readme.md', readMeContent, (err) =>
-    err ? console.log(err) : console.log("Successfully created Readme.md!")
-    )
-}
-
 
 function generateMarkdown(data) {
   return `
     # ${data.title}
 
+    ## Table of Contents
+    * [Description](#description)
+    * [Installation](#installation)
+    * [Usage](#usage)
+    * [License](#license)
+    * [Contributions](#contributions)
+    * [Tests](#tests)
+    * [Questions](#questions)
+    
     ## Description
-     ${data.about}
-     ${data.motivation}
      ${data.use}
-
-    ## Language
-     ${data.language}
-
-    ## Installation
+     
+     ## Installation
      ${data.install}
-
+     
+    ## Usage
+     ${data.use}
+     
+    ## License 
+    ${data.license}
+    
     ## Contributiors 
      ${data.collab}
 
-    ## License 
-     ${data.license}
+    ## Tests
+    ${data.test}
+    
+    ## Questions
+    If you have any questions regarding this project, feel free to reach me via Github or email.
 
-    ## Link
-     ${data.github}
+    Github: ${data.githubUsername}
+
+    Email: ${data.email}
+
   `;
 }
 
 // TODO: Create a function to initialize app
+function writeToFile(answers) {
+    const readMeContent = generateMarkdown(answers);
+    fs.writeFile("./readme.md", readMeContent, (err) =>
+    err ? console.log(err) : console.log("Successfully created Readme.md!")
+    );
+}
 function init() {
   inquirer.prompt(questions).then((answers) => {
-    console.log(answers)
-
+      console.log(answers);
+      
     const test = generateMarkdown(answers);
     console.log(test);
   });
